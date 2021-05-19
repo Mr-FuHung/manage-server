@@ -10,7 +10,7 @@ const CODE = {
     PARAM_ERROR: 10001,//参数不正确
     USER_ACCOUNT_ERROR: 20001,//用户账号密码错误
     USER_LOGIN_ERROR: 20002,//用户未登录
-    BUSINESS_ERROE: 30001,//业务请求失败
+    BUSINESS_ERROE: 9999,//业务请求失败
     AUTH_ERROR: 40001//认证失败或者THKEN过期
 };
 
@@ -27,13 +27,13 @@ module.exports = {
             skipIndex
         }
     },
-    success({ data = null, msg = '', code = CODE.SUCCESS }) {
-        log4js.debug(data)
+    success(data = null, msg = '', code = CODE.SUCCESS) {
+        log4js.info(data)
         return {
             data, msg, code
         }
     },
-    fail({ data = null, msg = '', code = CODE.BUSINESS_ERROE }) {
+    fail(msg = '', data = null, code = CODE.BUSINESS_ERROE) {
         log4js.debug(msg)
         return {
             data, msg, code

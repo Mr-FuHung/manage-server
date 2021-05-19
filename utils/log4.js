@@ -18,7 +18,7 @@ log4js.configure({
         console: { type: 'console' },
         info: {
             type: 'file',
-            filename: 'logs/info-log.js'
+            filename: 'logs/info-log.log'
         },
         error: {
             type: 'datefile',
