@@ -39,7 +39,7 @@ app.use(async (ctx, next) => {
     }
   });
 })
-app.use(koajwt({ secret: config.secret }).unless({
+app.use(koajwt({ secret: config.secret /* 密钥 */}).unless({
   path: ['/v1/users/login']//不校验的接口
 }))
 
