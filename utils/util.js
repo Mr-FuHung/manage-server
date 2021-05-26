@@ -15,6 +15,7 @@ const CODE = {
 };
 
 module.exports = {
+    CODE,
     pager({ pageNum = 1, pageSize = 10 }) {
         pageNum -= 0;
         pageSize -= 0;
@@ -27,13 +28,13 @@ module.exports = {
             skipIndex
         }
     },
-    success(data = null, msg = '', code = CODE.SUCCESS) {
+    success({ data = null, msg = '请求成功', code = CODE.SUCCESS }) {
         log4js.info(data)
         return {
             data, msg, code
         }
     },
-    fail(msg = '', data = null, code = CODE.BUSINESS_ERROE) {
+    fail({ data = null, msg = '请求失败', code = CODE.BUSINESS_ERROE }) {
         log4js.debug(msg)
         return {
             data, msg, code

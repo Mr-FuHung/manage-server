@@ -3,5 +3,6 @@
 *
 * */
 module.exports = {
-    URL:'mongodb://localhost:27017/manager'
+    URL:'mongodb://localhost:27017/manager',
+    secret:'FuHung',//token密钥
 }
