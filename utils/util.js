@@ -17,8 +17,8 @@ const CODE = {
 module.exports = {
     CODE,
     pager({ pageNum = 1, pageSize = 10 }) {
-        pageNum -= 0;
-        pageSize -= 0;
+        pageNum *= 1;
+        pageSize *= 1;
         const skipIndex = (pageNum - 1) * pageSize;
         return {
             page: {

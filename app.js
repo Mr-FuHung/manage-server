@@ -31,6 +31,7 @@ app.use(async (ctx, next) => {
   log4js.info(`params:${JSON.stringify(ctx.request.body || ctx.request.query)}`);
   // next()//next执行下一个中间件，next返回下一个中间件执行后的promise函数，下一个中间件抛出错误被catch捕获并处理
   await next().catch(err => {
+    console.log(1111, err)
     if (err.status === 401) {
       err.status = 200;
       ctx.body = utils.fail({ msg: 'token认证失败', code: utils.CODE.AUTH_ERROR })
@@ -39,10 +40,10 @@ app.use(async (ctx, next) => {
     }
   });
 })
-app.use(koajwt({ secret: config.secret /* 密钥 */}).unless({
-  path: ['/v1/users/login']//不校验的接口
-}))
 
+app.use(koajwt({ secret: config.secret /* 密钥 */ }).unless({
+  path: [/\/v1\/users\/login/]
+}));
 
 router.prefix('/v1')//一级路由
 

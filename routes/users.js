@@ -29,5 +29,32 @@ router.post('/login', async function (ctx, next) {
   }
 })
 
-
+router.get('/list', async (ctx) => {
+  const { userId, userName, state } = ctx.request.query;
+  const { page, skipIndex } = util.pager(ctx.request.query);
+  const params = {};
+  userId && (params.userId = userId)
+  userName && (params.userName = userId)
+  state && (params.state = userId)
+  try {
+    //根据条件查询所有用户列表
+    const query = User.find(params, { userPwd: 0 });//返回所有数据
+    //skip(skipIndex)通过第几条开始查询，limit(pageSize)查询几条
+    const list = await query.skip(skipIndex).limit(page.pageSize);
+    // const total = await User.countDocuments(params);//总条数
+    const total = (await query).length;//总条数
+    ctx.body = util.success({
+      data: {
+        page: {
+          ...page, total
+        },
+        list
+      }
+    })
+  } catch (error) {
+    ctx.body = util.fail({
+      msg: `查询错误:${console.error.stack}`
+    })
+  }
+})
 module.exports = router
