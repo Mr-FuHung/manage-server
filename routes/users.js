@@ -11,7 +11,6 @@ router.post('/login', async function (ctx, next) {
   try {
     const { userName, userPwd } = ctx.request.body;//post=>body,get=>query;
     const dbData = await User.findOne({ userName, userPwd: md5(userPwd) }, ['userName', 'userId', 'userEmail', 'role', 'state', 'deptId', 'roleList', 'job'])
-    console.log(1111111, md5(userPwd))
     if (dbData) {
       const data = dbData._doc;
 

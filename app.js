@@ -9,8 +9,10 @@ const router = require('koa-router')()
 const koajwt = require('koa-jwt')
 const config = require('./config')
 const utils = require('./utils/util')
-
-const users = require('./routes/users')//路由
+//路由开始
+const users = require('./routes/users')
+const menus = require('./routes/menus')
+//路由结束
 
 require('./config/db')//开启链接数据库
 // error handler
@@ -31,7 +33,6 @@ app.use(async (ctx, next) => {
   log4js.info(`params:${JSON.stringify(ctx.request.body || ctx.request.query)}`);
   // next()//next执行下一个中间件，next返回下一个中间件执行后的promise函数，下一个中间件抛出错误被catch捕获并处理
   await next().catch(err => {
-    console.log(1111, err)
     if (err.status === 401) {
       err.status = 200;
       ctx.body = utils.fail({ msg: 'token认证失败', code: utils.CODE.AUTH_ERROR })
@@ -49,6 +50,7 @@ router.prefix('/v1')//一级路由
 
 // routes
 router.use(users.routes(), users.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
+router.use(menus.routes(), menus.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 
 app.use(router.routes(), router.allowedMethods())//加载全局的router，允许的请求方式，允许所有
 
