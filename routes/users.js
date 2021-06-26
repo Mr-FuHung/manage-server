@@ -42,8 +42,7 @@ router.get('/list', async (ctx) => {
     const query = User.find(params, { userPwd: 0 });//返回所有数据
     //skip(skipIndex)通过第几条开始查询，limit(pageSize)查询几条
     const list = await query.skip(skipIndex).limit(page.pageSize);
-    // const total = await User.countDocuments(params);//总条数
-    const total = (await query).length;//总条数
+    const total = await User.countDocuments(params);//总条数
     ctx.body = util.success({
       data: {
         page: {

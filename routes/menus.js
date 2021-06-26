@@ -1,7 +1,7 @@
 const router = require('koa-router')()
 const Menu = require('./../models/menuSchema')
 const util = require('./../utils/util')
-const { CODE } = require('./../utils/util')
+const { CODE } = util;
 router.prefix('/menu')//二级路由
 //菜单查询
 router.get('/list', async (ctx) => {
