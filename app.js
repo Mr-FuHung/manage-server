@@ -13,6 +13,7 @@ const utils = require('./utils/util')
 const users = require('./routes/users')
 const menus = require('./routes/menus')
 const roles = require('./routes/roles')
+const depts = require('./routes/depts')
 //路由结束
 
 require('./config/db')//开启链接数据库
@@ -53,6 +54,7 @@ router.prefix('/v1')//一级路由
 router.use(users.routes(), users.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 router.use(menus.routes(), menus.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 router.use(roles.routes(), roles.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
+router.use(depts.routes(), depts.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 
 app.use(router.routes(), router.allowedMethods())//加载全局的router，允许的请求方式，允许所有
 

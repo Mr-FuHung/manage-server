@@ -27,10 +27,7 @@ const getTreeMenu = (list, id) => {
         item.children = getTreeMenu(list, item._id);
         if (!item.children.length) {
             delete item.children
-        } /* else if (item.children[0].menuType === 2) {
-            //后期使用，快速区分按钮和菜单
-            item.action = item.children;
-        }; */
+        } 
     })
     return arr;
 }

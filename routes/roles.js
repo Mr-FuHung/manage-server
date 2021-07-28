@@ -3,7 +3,7 @@ const Role = require('./../models/roleSchema')
 const util = require('./../utils/util')
 const { CODE } = util;
 router.prefix('/roles')//二级路由
-//菜单查询
+//角色查询
 router.get('/allList', async (ctx) => {
     try {
         let list = await Role.find({}, ['_id', 'roleName']) || [];
@@ -40,7 +40,7 @@ router.get('/list', async (ctx) => {
         })
     } catch (error) {
         ctx.body = util.fail({
-            msg: `查询错误:${console.error.stack}`
+            msg: `查询错误:${error.stack}`
         })
     }
 })

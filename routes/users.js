@@ -53,7 +53,21 @@ router.get('/list', async (ctx) => {
     })
   } catch (error) {
     ctx.body = util.fail({
-      msg: `查询错误:${console.error.stack}`
+      msg: `查询错误:${error.stack}`
+    })
+  }
+})
+
+//全量用户列表
+router.get('/all/list', async (ctx) => {
+  try {
+    const list = await User.find({}, ['userId', 'userName', 'userEmail']);//返回所有数据
+    ctx.body = util.success({
+      data: list
+    })
+  } catch (error) {
+    ctx.body = util.fail({
+      msg: `查询错误:${error.stack}`
     })
   }
 })
