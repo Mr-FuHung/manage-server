@@ -39,5 +39,20 @@ module.exports = {
         return {
             data, msg, code
         }
-    }  
+    },
+    getJoinTree(list, id) {
+        let arr = [];
+        list.forEach(item => {
+            if (String(item.parentId.slice().pop()) == String(id)) {
+                arr.push(item._doc)
+            }
+        })
+        arr.forEach(item => {
+            item.children = this.getJoinTree(list, item._id);
+            if (!item.children.length) {
+                delete item.children
+            }
+        })
+        return arr;
+    }
 }

@@ -11,7 +11,7 @@ router.get('/list', async ctx => {
         //根据条件查询所有用户列表
         const list = await Dept.find(params) || [];//返回所有数据
         ctx.body = util.success({
-            data: deptName ? list : getTreeDept(list, null),
+            data: deptName ? list : util.getJoinTree(list, null),
             msg: '查询成功'
         })
     } catch (error) {
@@ -20,25 +20,6 @@ router.get('/list', async ctx => {
         })
     }
 })
-//递归部门拼接树形结构
-const getTreeDept = (list, id) => {
-    let arr = [];
-    list.forEach(item => {
-        if (String(item.parentId.slice().pop()) == String(id)) {
-            arr.push(item._doc)
-        }
-    })
-    arr.map(item => {
-        item.children = getTreeDept(list, item._id);
-        if (!item.children.length) {
-            delete item.children
-        } /* else if (item.children[0].menuType === 2) {
-            //后期使用，快速区分按钮和菜单
-            item.action = item.children;
-        }; */
-    })
-    return arr;
-}
 
 router.post('/operate', async ctx => {
     const { _id, action, ...params } = ctx.request.body;

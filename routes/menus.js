@@ -11,26 +11,11 @@ router.get('/list', async (ctx) => {
     menuState && (params.menuState = menuState)
     let list = await Menu.find(params) || [];
     ctx.body = util.success({
-        data: menuName ? list : getTreeMenu(list, null),
+        data: menuName ? list : util.getJoinTree(list, null),
         msg: '查询成功'
     })
 })
-//递归菜单拼接树形结构
-const getTreeMenu = (list, id) => {
-    let arr = [];
-    list.forEach(item => {
-        if (String(item.parentId.slice().pop()) == String(id)) {
-            arr.push(item._doc)
-        }
-    })
-    arr.map(item => {
-        item.children = getTreeMenu(list, item._id);
-        if (!item.children.length) {
-            delete item.children
-        } 
-    })
-    return arr;
-}
+
 //菜单删除
 router.delete('/delete', async (ctx) => {
     const { _id } = ctx.request.body;
