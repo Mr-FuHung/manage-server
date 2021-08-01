@@ -137,7 +137,7 @@ router.post('/operate', async (ctx) => {
       })
       return;
     }
-    const res = await User.findOneAndUpdate({ userId }, { userEmail, job, state, userRole, deptId, mobile, systemRole });
+    const res = await User.findOneAndUpdate({ userId }, { userEmail, job, state, userRole, deptId, mobile, systemRole, updateTime: Date.now() });
     if (res) {
       ctx.body = util.success({
         data: true,
