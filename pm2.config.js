@@ -5,7 +5,8 @@ module.exports={
             script:'./bin/www',
             cwd:'./',
             ignore_watch:['node_modules','logs','views','public'],
-            node_args:'--harmony'
+            node_args:'--harmony',
+            exec_mode: "cluster"
         },
     ]
 }

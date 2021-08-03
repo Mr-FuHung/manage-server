@@ -26,7 +26,7 @@ app.use(bodyparser({//可接收前端传来的哪些格式的数据
 }))
 app.use(json())
 
-app.use(require('koa-static')(__dirname + '/public'))//静态资源目录
+app.use(require('koa-static')(__dirname + '/public/dist'))//静态资源目录
 
 app.use(views(__dirname + '/views', {
   extension: 'pug' //类似ejs
