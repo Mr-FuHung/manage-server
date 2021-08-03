@@ -21,7 +21,7 @@ log4js.configure({
             filename: 'logs/info-log.log'
         },
         error: {
-            type: 'datefile',
+            type: 'dateFile',
             filename: 'logs/error',
             pattern: 'yyyy-MM-dd.log',
             alwaysIncludePattern: true//设置文件名称为filename+pattern的组合体
