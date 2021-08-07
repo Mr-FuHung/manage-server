@@ -2,6 +2,7 @@
 *数据库的实体对象
 *
 * */
+const { ManageDB } = require('./../config/db');
 const mongoose = require('mongoose');
 const leaveSchema = mongoose.Schema({
     "orderNo": String,//单号
@@ -48,4 +49,4 @@ const leaveSchema = mongoose.Schema({
     remark: String//备用字段
 })
 // mongoose.model("数据库集合名称", 配置)
-module.exports = mongoose.model("leave", leaveSchema);
+module.exports = ManageDB.model("leave", leaveSchema);
