@@ -2,6 +2,7 @@
 *数据库的实体对象
 *
 * */
+const { ManageDB } = require('./../config/db');
 const mongoose = require('mongoose');
 const deptSchema = mongoose.Schema({
     deptName: String,//部门名称
@@ -20,4 +21,4 @@ const deptSchema = mongoose.Schema({
     remark: String//备用字段
 })
 // mongoose.model("数据库集合名称", 配置)
-module.exports = mongoose.model("dept", deptSchema);
+module.exports = ManageDB.model("dept", deptSchema);

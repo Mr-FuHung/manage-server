@@ -2,6 +2,7 @@
 *数据库的实体对象
 *
 * */
+const { ManageDB } = require('./../config/db');
 const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     "userId": Number,//用户ID，自增长
@@ -32,4 +33,4 @@ const userSchema = mongoose.Schema({
     remark: String//备用字段
 })
 // mongoose.model("数据库集合名称", 配置)
-module.exports = mongoose.model("users", userSchema);
+module.exports = ManageDB.model("users", userSchema);
