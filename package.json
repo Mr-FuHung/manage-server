@@ -5,7 +5,7 @@
   "scripts": {
     "start": "set NODE_ENV=dev&&node bin/www",
     "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "set NODE_ENV=prd&&pm2 start pm2.config.js  --watch",
+    "prd": "pm2 start pm2.config.js  --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

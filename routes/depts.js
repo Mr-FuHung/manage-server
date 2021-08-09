@@ -1,6 +1,7 @@
 const router = require('koa-router')();
 const util = require('./../utils/util');
 const Dept = require('./../models/deptSchema');
+const { CODE } = util;
 router.prefix('/dept')//二级路由
 //部门列表查询
 router.get('/list', async ctx => {

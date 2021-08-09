@@ -5,6 +5,7 @@ const Counter = require('./../models/counterSchema')
 const path = require('path')
 const fs = require('fs'); // 引入文件系统模块
 const config = require('./../config')
+const { CODE } = util;
 router.prefix('/article')//二级路由
 //文章列表查询
 router.get('/list', async ctx => {
@@ -47,7 +48,7 @@ router.post('/operate', async ctx => {
                 msg: `文章创建成功`
             })
         } catch (error) {
-            ctx.body = util.success({
+            ctx.body = util.fail({
                 code: CODE.PARAM_ERROR,
                 msg: error.stack
             })
