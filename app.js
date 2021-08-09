@@ -3,7 +3,7 @@ const app = new Koa()
 const views = require('koa-views') //解析html中间件，类似ejs
 const json = require('koa-json')//将数据转为json
 const onerror = require('koa-onerror')//监听错误
-const bodyparser = require('koa-bodyparser')//将前端的get,post...请求的参数转为统一格式
+// const bodyparser = require('koa-bodyparser')//将前端的get,post...请求的参数转为统一格式
 const log4js = require('./utils/log4')//日志
 const router = require('koa-router')()
 const koajwt = require('koa-jwt')
@@ -16,15 +16,31 @@ const roles = require('./routes/roles')
 const depts = require('./routes/depts')
 const leaves = require('./routes/leaves')
 const articles = require('./routes/articles')
+const koaBody = require('koa-body');
 //路由结束
 
 require('./config/db')//开启链接数据库
 // error handler
 onerror(app)
 // middlewares
-app.use(bodyparser({//可接收前端传来的哪些格式的数据
-  enableTypes: ['json', 'form', 'text']
-}))
+// app.use(bodyparser({//可接收前端传来的哪些格式的数据
+//   enableTypes: ['json', 'form', 'text']
+// }))
+
+app.use(koaBody({
+  multipart: true, // 支持文件上传
+  strict:false,
+  jsonStrict:false,
+  formidable: {
+    uploadDir:config.staticFilePath, // 设置文件上传目录
+    keepExtensions: true,    // 保持文件的后缀
+    maxFieldsSize: 2 * 1024 * 1024, // 文件上传大小
+    onFileBegin: (name, file) => { // 文件上传前的设置
+      // console.log(`name: ${name}`);
+      // console.log(file);
+    },
+  }
+}));
 app.use(json())
 
 app.use(require('koa-static')(__dirname + '/public/dist'))//静态资源目录

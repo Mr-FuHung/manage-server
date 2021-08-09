@@ -1,8 +1,12 @@
 const router = require('koa-router')();
 const util = require('./../utils/util');
 const Article = require('./../models/articleSchema');
-router.prefix('/article')//三级路由
-//部门列表查询
+const Counter = require('./../models/counterSchema')
+const path = require('path')
+const fs = require('fs'); // 引入文件系统模块
+const config = require('./../config')
+router.prefix('/article')//二级路由
+//文章列表查询
 router.get('/list', async ctx => {
     const { title, userName, state } = ctx.request.query;
     const { page, skipIndex } = util.pager(ctx.request.query);
@@ -33,13 +37,14 @@ router.get('/list', async ctx => {
 
 router.post('/operate', async ctx => {
     const { _id, action, ...params } = ctx.request.body;
-    let res;
     if (action === 'add') {
+        const { sequence_value } = await Counter.findOneAndUpdate({ _id: 'articleId' }, { $inc: { sequence_value: 1 } }, { new: true })//new代表返回更改后的数据，否则返回更改之前
+        params.articleId = sequence_value;
         try {
             res = await Article.create(params)
             ctx.body = util.success({
                 data: true,
-                msg: `部门创建成功`
+                msg: `文章创建成功`
             })
         } catch (error) {
             ctx.body = util.success({
@@ -53,7 +58,7 @@ router.post('/operate', async ctx => {
         res = await Article.findByIdAndUpdate(_id, params);
         ctx.body = util.success({
             data: true,
-            msg: `修改成功`
+            msg: `文章修改成功`
         })
     }
 })
@@ -62,7 +67,6 @@ router.delete('/delete', async ctx => {
     const { _id } = ctx.request.body;
     try {
         await Article.findByIdAndRemove(_id);
-        await Article.deleteMany({ parentId: { $all: [_id] } });//删除包含_id的子项
         ctx.body = util.success({
             data: true,
             msg: `删除成功`
@@ -72,6 +76,35 @@ router.delete('/delete', async ctx => {
             data: false,
             msg: error.stack
         })
+    }
+})
+router.post('/uploadFile', ctx => {
+    const file = ctx.request.files.file.path
+    let name = path.basename(file)
+    ctx.body = util.success({
+        data: {
+            path: config.lineFilePath + name,
+            name
+        },
+        msg: '上传成功'
+    })
+})
+router.delete('/removeFile', ctx => {
+    const { file } = ctx.request.body
+    try {
+        fs.unlinkSync(`${config.staticFilePath}/${file}`);
+        ctx.body = util.success({
+            data: true,
+            msg: '文件删除成功'
+        })
+    } catch (err) {
+        if (err) {
+            ctx.body = util.fail({
+                data: false,
+                msg: err.stack
+            })
+        };
+
     }
 })
 module.exports = router;
