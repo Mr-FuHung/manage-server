@@ -12,11 +12,11 @@ const roleSchema = mongoose.Schema({
     roleName: String,//角色名称
     "createTime": {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },//创建时间
     "updateTime": {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },//更新时间
     remark: String//备用字段
 })
