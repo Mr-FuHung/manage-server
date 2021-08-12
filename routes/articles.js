@@ -100,7 +100,7 @@ router.delete('/removeFile', ctx => {
         })
     } catch (err) {
         if (err) {
-            ctx.body = util.fail({
+            ctx.body = util.success({
                 data: false,
                 msg: err.stack
             })
