@@ -18,6 +18,7 @@ const leaves = require('./routes/leaves')
 const articles = require('./routes/articles')
 const blogUsers = require('./routes/blogUsers')
 const comments = require('./routes/comments')
+const articleClassify = require('./routes/articleClassify')
 const koaBody = require('koa-body');
 //路由结束
 
@@ -79,6 +80,7 @@ router.use(leaves.routes(), leaves.allowedMethods())//挂载二级路由，允�
 router.use(articles.routes(), articles.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 router.use(blogUsers.routes(), blogUsers.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 router.use(comments.routes(), comments.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
+router.use(articleClassify.routes(), articleClassify.allowedMethods())//挂载二级路由，允许的请求方式，允许所有
 
 app.use(router.routes(), router.allowedMethods())//加载全局的router，允许的请求方式，允许所有
 

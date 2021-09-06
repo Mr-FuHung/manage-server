@@ -9,15 +9,16 @@ const { CODE } = util;
 router.prefix('/article')//二级路由
 //文章列表查询
 router.get('/list', async ctx => {
-    const { title, userName, state } = ctx.request.query;
+    const { title, userName, state, articleClass } = ctx.request.query;
     const { page, skipIndex } = util.pager(ctx.request.query);
     const params = {};
     title && (params.title = title)
+    articleClass && (params.articleClass = articleClass)
     userName && (params["author.userName"] = userName)
     state && (params.state = state)
     try {
         //根据条件查询所有用户列表
-        const query = Article.find(params);//返回所有数据
+        const query = Article.find(params).sort({ _id: -1 });//返回所有数据
         //skip(skipIndex)通过第几条开始查询，limit(pageSize)查询几条
         const list = await query.skip(skipIndex).limit(page.pageSize);
         const total = await Article.countDocuments(params);//总条数

@@ -4,21 +4,14 @@
 * */
 const { BlogDB } = require('./../config/db');
 const mongoose = require('mongoose');
-const articleSchema = mongoose.Schema({
-    "title": String,//标题
+const articleClassifySchema = mongoose.Schema({
+    "articleClassName": String,//分类名称
     "desc": String,//描述
-    "articleClass": Number,//文章分类
     "state": {
         type: Number,
         default: 1//1公开,2隐藏
     },//状态
-    "content": String,//文章内容
-    "coverPic": [String],
-    "articleId": Number,//文章ID
-    "author": {//作者信息
-        userName: String,
-        userId: String
-    },
+    "articleClassId": Number,//分类id
     "createTime": {
         type: Date,
         default: Date.now
@@ -30,4 +23,4 @@ const articleSchema = mongoose.Schema({
     remark: String//备用字段
 })
 // mongoose.model("数据库集合名称", 配置)
-module.exports = BlogDB.model("article", articleSchema);
+module.exports = BlogDB.model("articleClassify", articleClassifySchema);
